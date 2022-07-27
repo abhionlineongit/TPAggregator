@@ -40,13 +40,17 @@ ation/json' -d '[{"src_app": "foo", "dest_app": "bar", "vpc_id": "vpc-0", "bytes
 oo", "dest_app": "bar", "vpc_id": "vpc-0", "bytes_tx": 200, "bytes_rx": 600, "hour": 1},{"src_app": "baz", "dest_app": "qux", "vpc_id
 ": "vpc-0", "bytes_tx": 100, "bytes_rx": 500, "hour": 1},{"src_app": "baz", "dest_app": "qux", "vpc_id": "vpc-0", "bytes_tx": 100, "b
 ytes_rx": 500, "hour": 2},{"src_app": "baz", "dest_app": "qux", "vpc_id": "vpc-1", "bytes_tx": 100, "bytes_rx": 500, "hour": 2}]'
+  
 < HTTP/1.1 200 OK
           
 curl http://172.17.0.14:8080/flows?hour=1
+          
 [{"src_app": "foo", "dest_app": "bar", "vpc_id": "vpc-0", "bytes_tx": "300", "bytes_rx": "900", "hour": "1},{"src_app": "baz", "dest_app": "qux", "vpc_id": "vpc-0", "bytes_tx": "100", "bytes_rx": "500", "hour": "1}]
           
 Running service on two instances listening on port 8080 and 8081.
+          
 curl http://172.17.0.14:8081/flows?hour=1
+          
 [{"src_app": "foo", "dest_app": "bar", "vpc_id": "vpc-0", "bytes_tx": "300", "bytes_rx": "900", "hour": "1},{"src_app": "baz", "dest_app": "qux", "vpc_id": "vpc-0", "bytes_tx": "100", "bytes_rx": "500", "hour": "1}]
           
 PERFORMANCE
@@ -54,25 +58,30 @@ PERFORMANCE
 Performance scaled linearly at the start but started to saturate CPU to 400% usage on 8 core machine. This is mostly due to contention.
           
 cd tests/wrk
+          
 wrk -c1 -t1 -d10s -s benchmark_microsvc_POST.lua http://172.17.0.14:8080/flows --latency
+          
 Running 10s test @ http://172.17.0.14:8080/flows
   1 threads and 1 connections
 Requests/sec:   1920.54
 Transfer/sec:     71.27KB
           
 wrk -c2 -t2 -d10s -s benchmark_microsvc_POST.lua http://172.17.0.14:8080/flows --latency
+          
 Running 10s test @ http://172.17.0.14:8080/flows
   2 threads and 2 connections
 Requests/sec:   3878.57
 Transfer/sec:    143.93KB
           
 wrk -c4 -t4 -d10s -s benchmark_microsvc_POST.lua http://172.17.0.14:8080/flows --latency
+          
 Running 10s test @ http://172.17.0.14:8080/flows
   4 threads and 4 connections
 Requests/sec:   5145.43
 Transfer/sec:    190.94KB
           
 wrk -c8 -t8 -d10s -s benchmark_microsvc_POST.lua http://172.17.0.14:8080/flows --latency
+  8 threads and 8 connections   
 Requests/sec:   5342.86
 Transfer/sec:    198.27KB
   
