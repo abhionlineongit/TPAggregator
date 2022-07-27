@@ -3,32 +3,40 @@ Service which aggregates the throughput between micro-services.
 
 HOW TO BUILD/INSTALL
 
-1) Install following packages on Ubuntu
+Install following packages on Ubuntu
+
   sudo apt-get install cmake openssl boost zlib
+  
   sudo apt-get install libhiredis-dev // microservice use [redisplusplus](https://github.com/sewenew/redis-plus-plus), which uses hiredis.
+  
   sudo apt-get install libcpprest-dev // microservice is built on cpprestsdk (https://github.com/microsoft/cpprestsdk/blob/master/README.md)
   
   redisplusplus libraries and include files are added to the git repo under redis_interface/.
   
-2) Clone the git repo
+CLONE THE GIT REPO
 
-3) Build
-   $ mkdir build
-   $ cd build
-   $ cmake -DCMAKE_BUILD_TYPE=Debug ..
-   $ make -j 8
+BUILD
+  
+  $ mkdir build; cd build; cmake ..; make -j 8
    
 RUN THE SERVICE
 
 ./build/TPAggregator -h
+
 -h                                 help (this message)
+
 -r                                 Enable Redis
+
 -i<int>                            Redis Instance ID
+
 -n<int>                            Number of Redis Instances
+
 -p<int>                            Service Port Number
 
 To run the standalone instance -> ./build/TPAggregator 
+
 To run multiple instances sync'ed over Redis -> ./run_service.sh $num_of_instances. 
+
 Also run Redis service on the machine sudo service redis-server start
   
 FUNCTIONAL TESTS
