@@ -1,8 +1,6 @@
 # TPAggregator
 Service which aggregates the throughput between micro-services.
 
-DESIGN CONSIDERATIONS:
-
 HOW TO BUILD/INSTALL
 
 1) Install following packages on Ubuntu
@@ -34,6 +32,7 @@ To run multiple instances sync'ed over Redis -> ./run_service.sh $num_of_instanc
 Also run Redis service on the machine sudo service redis-server start
   
 FUNCTIONAL TESTS
+
 Simple POST/GET CURL requests at the endpoint and verify the outout.
 
 curl -X POST "http://172.17.0.14:8080/flows" -H 'Content-Type: applic
