@@ -5,7 +5,7 @@ HOW TO BUILD/INSTALL
 
 Install following packages on Ubuntu
 
-  sudo apt-get install cmake openssl boost zlib
+  sudo apt-get install cmake openssl libboost-all-dev zlib1g-dev
   
   sudo apt-get install libhiredis-dev // microservice use [redisplusplus](https://github.com/sewenew/redis-plus-plus), which uses hiredis.
   
