@@ -35,7 +35,7 @@ RUN THE SERVICE
 
 To run the standalone instance -> ./build/TPAggregator 
 
-To run multiple instances sync'ed over Redis -> ./run_service.sh $num_of_instances. 
+To run multiple instances sync'ed over Redis -> ./run_service.sh $num_of_instances. multiple redis instances are tested on same physical machine, but to scale the micro-service, these instances should run on different machines.
 
 Also run Redis service on the machine sudo service redis-server start
   
@@ -63,7 +63,7 @@ curl http://172.17.0.14:8081/flows?hour=1
           
 PERFORMANCE
           
-Performance scaled linearly at the start but started to saturate CPU to 400% usage on 8 core machine. This is mostly due to contention.
+Performance scaled linearly at the start but started to saturate CPU to 400% usage on 8 core machine. This is mostly due to contention. The traffic which is running is repeated in nature and map to the same bucket in the table, hence more contention between threads. If the traffic is diverse, many src-app, dest-app and vpc-id, the performance should scale linearly with number of cores.
           
 cd tests/wrk
           
